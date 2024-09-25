@@ -7,6 +7,7 @@ function getCookieValue(cookieName) {
   for (var i = 0; i < cookieArray.length; i++) {
     var cookie = cookieArray[i].trim();
     if (cookie.indexOf(name) === 0) {
+      console.log('Cookie found: ' + cookieName + ' = ' + cookie.substring(name.length, cookie.length));
       return cookie.substring(name.length, cookie.length);
     }
   }
@@ -18,10 +19,12 @@ function getCookieValue(cookieName) {
 // Function to check SDK existence and add custom attribute
 function checkSDKExistanceAndAddCustomAttribute(attributeName, cookieName) {
   const sdkCheck = setInterval(() => {
+    console.log('Checking for NOIBUJS SDK...');
     if (window.NOIBUJS) {
       clearInterval(sdkCheck);
       var cookieValue = getCookieValue(cookieName);
       if (cookieValue) {
+        console.log('Adding custom attribute: ' + attributeName + ' with value: ' + cookieValue);
         window.NOIBUJS.addCustomAttribute(attributeName, cookieValue);
       } else {
         console.error('Could not find the ' + cookieName + ' cookie.');
